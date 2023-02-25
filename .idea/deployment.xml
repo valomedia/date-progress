@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="valo-dev.de" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="valo-dev.de">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/wp-content/plugins/date-progress" local="$PROJECT_DIR$" web="/wp-content/plugins/date-progress" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
