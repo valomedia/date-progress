@@ -7,8 +7,8 @@ Description:    A shortcode for time-based progress bars.
 Version:        0.0.1
 Author:         valo.media GmbH
 Author URI:     http://valo.media
-License:        AGPL3
-License URI:    https://www.gnu.org/licenses/agpl-3.0.html
+License:        GPL3
+License URI:    https://www.gnu.org/licenses/gpl-3.0.html
 */
 
 $DATE_PROGRESS_PRODUCT_ID = 'eQWGX2AwQtdGU_fQIEGsgA==';
