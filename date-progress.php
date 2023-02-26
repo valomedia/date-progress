@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name:    Date Progress
+Plugin Name:    DateProgress
 Plugin URI:     http://valo.media/en-us/dateprogress
 Description:    A shortcode for time-based progress bars.
 Version:        0.0.1
