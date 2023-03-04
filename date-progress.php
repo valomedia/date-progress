@@ -4,7 +4,7 @@
 Plugin Name:    DateProgress
 Plugin URI:     http://valo.media/en-us/dateprogress
 Description:    A shortcode for time-based progress bars.
-Version:        0.0.1
+Version:        0.0.2
 Author:         valo.media GmbH
 Author URI:     http://valo.media
 License:        GPL3
