@@ -25,11 +25,21 @@ You should have received a copy of the GNU General Public License along with Dat
 <https://www.gnu.org/licenses/>.
  */
 
+/*
+ * Global constants
+ */
+
 $DATE_PROGRESS_PRODUCT_ID = 'eQWGX2AwQtdGU_fQIEGsgA==';
 $DATE_PROGRESS_WATERMARK = '
 	<p>
 		Made using <a href="https://valo.media/en-us/dateprogress">DateProgress by valo.media</a>.
 	</p>';
+$DATE_PROGRESS_PLUGIN_INFORMATION_URL = 'https://cdn.valo.media/date-progress/current/plugin-information.json';
+$DATE_PROGRESS_PLUGIN_INFORMATION_TRANSIENT = 'date-progress-plugin-information';
+
+/*
+ * Licensing
+ */
 
 function date_progress_license()
 {
@@ -59,6 +69,10 @@ function date_progress_license()
 function date_progress_check_license() {
 	return date_progress_license()["success"];
 }
+
+/*
+ * Functionality.
+ */
 
 function date_progress_shortcode($atts)
 {
@@ -162,6 +176,10 @@ function date_progress_shortcode($atts)
 
 add_shortcode('date_progress', 'date_progress_shortcode' );
 
+/*
+ * Backoffice
+ */
+
 function date_progress_settings_init()
 {
 	register_setting('date_progress', 'date_progress_license');
@@ -179,8 +197,6 @@ function date_progress_settings_init()
 		'date_progress_settings_section'
 	);
 }
-
-add_action('admin_init', 'date_progress_settings_init');
 
 function date_progress_settings_section_callback()
 {
@@ -339,4 +355,75 @@ function date_progress_options_page()
 	);
 }
 
+add_action('admin_init', 'date_progress_settings_init');
 add_action('admin_menu', 'date_progress_options_page');
+
+/*
+ * Auto-Update
+ */
+
+function date_progress_plugin_information() {
+	global $DATE_PROGRESS_PLUGIN_INFORMATION_URL;
+	global $DATE_PROGRESS_PLUGIN_INFORMATION_TRANSIENT;
+	$transient = get_transient($DATE_PROGRESS_PLUGIN_INFORMATION_TRANSIENT);
+	if ($transient) {
+		$result = json_decode($transient);
+	} else {
+		$remote = wp_remote_get($DATE_PROGRESS_PLUGIN_INFORMATION_URL);
+		if (is_wp_error($remote) || wp_remote_retrieve_response_code($remote) !== 200) { return false; }
+		$body = wp_remote_retrieve_body($remote);
+		if (empty($body)) { return false; }
+		set_transient($DATE_PROGRESS_PLUGIN_INFORMATION_TRANSIENT, $body, DAY_IN_SECONDS);
+		$result = json_decode($body);
+	}
+	return $result;
+}
+
+function date_progress_plugins_api($result, $action, $args)
+{
+	// Only proceed if getting plugin information for this plugin.
+	if ('plugin_information' !== $action || plugin_basename(__DIR__) !== $args->slug) { return $result; }
+
+	// Check for updates.
+	return date_progress_plugin_information() || $result;
+}
+
+function date_progress_update_plugins($transient) {
+	if (empty($transient->checked)) { return $transient; }
+
+	$plugin_information = date_progress_plugin_information();
+
+	if (
+		$plugin_information
+		&& version_compare($plugin_information->version, get_plugin_data(__FILE__)['Version'], '>')
+		&& version_compare($plugin_information->requires, get_bloginfo('version'), '<=')
+		&& version_compare($plugin_information->requires_php, PHP_VERSION, '<')
+	) {
+		$transient->response[plugin_basename(__FILE__)] = (object) array(
+			'slug' => $plugin_information->slug,
+			'plugin' => plugin_basename(__FILE__),
+			'new_version' => $plugin_information->version,
+			'tested' => $plugin_information->tested,
+			'package' => $plugin_information->trunk
+		);
+	}
+	return $transient;
+}
+
+function date_progress_upgrader_process_complete($upgrader, $hook_extra)
+{
+	global $DATE_PROGRESS_PLUGIN_INFORMATION_TRANSIENT;
+	if ($hook_extra['action'] === 'update' && $hook_extra['type'] === 'plugin') {
+		delete_transient($DATE_PROGRESS_PLUGIN_INFORMATION_TRANSIENT);
+	}
+}
+
+if (is_admin()) {
+	if (!function_exists('get_plugin_data')) {
+		require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+	}
+
+	add_filter('plugins_api', 'date_progress_plugins_api', 20, 3);
+	add_filter('site_transient_update_plugins', 'date_progress_update_plugins');
+	add_action('upgrader_process_complete', 'date_progress_upgrader_process_complete', 10, 2);
+}
