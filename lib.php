@@ -53,7 +53,7 @@ function date_progress_license()
 			)
 		)
 	);
-	$license = json_decode(curl_exec($request), true);
+	$license = json_decode(curl_exec($request));
 	curl_close($request);
 	return $license;
 }
@@ -64,5 +64,10 @@ function date_progress_license()
  * This will check whether the user has a valid license.
  */
 function date_progress_check_license() {
-	return date_progress_license()['success'];
+	$license = date_progress_license();
+	return $license
+	       && $license->success
+	       && $license->purchase
+	       && !$license->purchase->refunded
+	       && !$license->purchase->chargebacked;
 }

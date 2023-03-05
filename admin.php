@@ -54,18 +54,28 @@ function date_progress_settings_init()
  * Callback for generating the settings section.
  *
  * This will output the markup for the additional content (other than the heading and the actual settings) of the
- * settings section for date progress.  Currently, this is either a link to our shop, or a hint, that the entered
- * license is valid.
+ * settings section for date progress.  Currently, this is either a link to our shop, if the user hasn't yet entered
+ * a license key, or information about whether the license key is valid otherwise.
  */
 function date_progress_settings_section_callback()
 {
-	echo date_progress_check_license()
-		? '<p>Your license is valid! You are good to go :-)</p>'
-		: '
+	if (get_option( 'date_progress_license' )) {
+		echo date_progress_check_license()
+			? '<p>Your license key is valid! You are good to go :-)</p>'
+			: '
+				<p>
+					Your license key seems to be invalid :-(
+				</p>
+				<p>
+					Please <a href="https://valo.media/en-us/contact">contact us</a>, if you believe this is a mistake.
+				</p>';
+	} else {
+		echo '
 			<p>
 				DateProgress is a paid plugin. You can buy a license 
 				<a href="https://shop.valo.media/l/dateprogress">here</a>.
 			</p>';
+	}
 }
 
 /*
@@ -76,7 +86,7 @@ function date_progress_settings_section_callback()
 function date_progress_license_field_callback()
 {
 	$setting = get_option('date_progress_license');
-	$value = isset($setting) ? esc_attr($setting) : '';
+	$value = $setting ? esc_attr($setting) : '';
 	echo "<input type=\"text\" name=\"date_progress_license\" value=\"{$value}\">";
 }
 
