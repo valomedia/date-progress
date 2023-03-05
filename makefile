@@ -12,6 +12,15 @@
 # <https://www.gnu.org/licenses/>.
 #
 
+#
+# Build instructions for date-progress.
+#
+# This file governs the build process for date-progress, basically just consists of downloading the single dependency
+# (bootstrap) and zipping up all the necessary files.  It feels a bit silly to have a makefile for this, but it's just
+# barely complex enough that simply zipping up the source tree doesn't quite cut it, and this is nicer than a shell
+# script.
+#
+
 date-progress.zip :	bootstrap.min.css date-progress.php LICENSE.md script.js style.css
 	cd .. \
 		&& zip \
