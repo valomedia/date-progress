@@ -385,7 +385,13 @@ function date_progress_plugins_api($result, $action, $args)
 	if ('plugin_information' !== $action || plugin_basename(__DIR__) !== $args->slug) { return $result; }
 
 	// Check for updates.
-	return date_progress_plugin_information() || $result;
+	$plugin_information = date_progress_plugin_information();
+
+	if ($plugin_information) {
+		return $plugin_information;
+	} else {
+		return  $result;
+	}
 }
 
 function date_progress_update_plugins($transient) {
