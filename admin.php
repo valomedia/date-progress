@@ -290,7 +290,28 @@ function date_progress_plugins_api($result, $action, $args)
 	$plugin_information = date_progress_plugin_information();
 
 	if ($plugin_information) {
-		return $plugin_information;
+		// Need to rebuild the object, since it needs to contain arrays where jsons_decode creates objects. Can't
+		// make use of the spread operator, since this would break PHP 7.3 compatibility.
+		return (object) array(
+			'author' => $plugin_information->author,
+			'banners' => array(
+				'high' => $plugin_information->banners->high,
+				'low' => $plugin_information->banners->low
+			),
+			'download_link' => $plugin_information->download_link,
+			'name' => $plugin_information->name,
+			'sections' => array(
+				'description' => $plugin_information->sections->description,
+				'installation' => $plugin_information->sections->installation,
+				'screenshots' => $plugin_information->sections->screenshots
+			),
+			'slug' => $args->slug,
+			'requires' => $plugin_information->requires,
+			'requires_php' => $plugin_information->requires_php,
+			'tested' => $plugin_information->tested,
+			'trunk' => $plugin_information->download_link,
+			'version' => $plugin_information->version,
+		);
 	} else {
 		return  $result;
 	}
@@ -316,7 +337,7 @@ function date_progress_update_plugins($transient) {
 		&& version_compare($plugin_information->requires_php, PHP_VERSION, '<')
 	) {
 		$transient->response[plugin_basename($PLUGIN_FILE)] = (object) array(
-			'slug' => $plugin_information->slug,
+			'slug' => plugin_basename(__DIR__),
 			'plugin' => plugin_basename($PLUGIN_FILE),
 			'new_version' => $plugin_information->version,
 			'tested' => $plugin_information->tested,
