@@ -31,6 +31,7 @@ License URI:    https://www.gnu.org/licenses/gpl-3.0.html
  * Global constants
  */
 
+$PLUGIN_FILE = __FILE__;
 $DATE_PROGRESS_PRODUCT_ID = 'eQWGX2AwQtdGU_fQIEGsgA==';
 $DATE_PROGRESS_WATERMARK = '
 	<p>

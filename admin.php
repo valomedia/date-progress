@@ -303,19 +303,21 @@ function date_progress_plugins_api($result, $action, $args)
  * performing updates for date-progress.
  */
 function date_progress_update_plugins($transient) {
+	global $PLUGIN_FILE;
+
 	if (empty($transient->checked)) { return $transient; }
 
 	$plugin_information = date_progress_plugin_information();
 
 	if (
 		$plugin_information
-		&& version_compare($plugin_information->version, get_plugin_data(__FILE__)['Version'], '>')
+		&& version_compare($plugin_information->version, get_plugin_data($PLUGIN_FILE)['Version'], '>')
 		&& version_compare($plugin_information->requires, get_bloginfo('version'), '<=')
 		&& version_compare($plugin_information->requires_php, PHP_VERSION, '<')
 	) {
-		$transient->response[plugin_basename(__FILE__)] = (object) array(
+		$transient->response[plugin_basename($PLUGIN_FILE)] = (object) array(
 			'slug' => $plugin_information->slug,
-			'plugin' => plugin_basename(__FILE__),
+			'plugin' => plugin_basename($PLUGIN_FILE),
 			'new_version' => $plugin_information->version,
 			'tested' => $plugin_information->tested,
 			'package' => $plugin_information->trunk
