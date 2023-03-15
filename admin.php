@@ -212,7 +212,8 @@ function date_progress_options_page_html()
 	wp_enqueue_style('date_progress_admin_style', plugins_url('style.css', __FILE__));
 	wp_enqueue_script('date_progress_admin_script', plugins_url('script.js', __FILE__));
 	if (isset($_POST['date_progress_license'])) {
-		add_option('date_progress_license', $_POST['date_progress_license']);
+		add_option('date_progress_license', $_POST['date_progress_license'])
+				|| update_option('date_progress_license', $_POST['date_progress_license']);
 	}
 	echo '<div class="wrap">';
 	echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
