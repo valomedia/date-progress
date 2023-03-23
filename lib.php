@@ -36,26 +36,34 @@ This file contains all functions used in multiple other files.
 function date_progress_license()
 {
 	global $DATE_PROGRESS_PRODUCT_ID;
-	$license_key = get_option('date_progress_license');
-	if (!$license_key) { return false; }
+	global $DATE_PROGRESS_PLUGIN_LICENSE_URL;
+	global $DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT;
 
-	$request = curl_init('https://api.gumroad.com/v2/licenses/verify');
-	curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($request, CURLOPT_POST, true);
-	curl_setopt(
-		$request,
-		CURLOPT_POSTFIELDS,
-		http_build_query(
+	$transient = get_transient($DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT);
+
+	if ($transient) {
+		$result = json_decode($transient);
+	} else {
+		$license_key = get_option('date_progress_license');
+		if (!$license_key) { return false; }
+
+		$remote = wp_remote_post(
+			$DATE_PROGRESS_PLUGIN_LICENSE_URL,
 			array(
-				'product_id' => $DATE_PROGRESS_PRODUCT_ID,
-				'license_key' => $license_key,
-				'increment_uses_count' => false
+				'body' => array(
+					'product_id' => $DATE_PROGRESS_PRODUCT_ID,
+					'license_key' => $license_key,
+					'increment_uses_count' => false
+				)
 			)
-		)
-	);
-	$license = json_decode(curl_exec($request));
-	curl_close($request);
-	return $license;
+		);
+		if (is_wp_error($remote) || wp_remote_retrieve_response_code($remote) !== 200) { return false; }
+		$body = wp_remote_retrieve_body($remote);
+		if (empty($body)) { return false; }
+		set_transient($DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT, $body, DAY_IN_SECONDS);
+		$result = json_decode($body);
+	}
+	return $result;
 }
 
 /*

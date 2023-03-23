@@ -39,6 +39,8 @@ $DATE_PROGRESS_WATERMARK = '
 	</p>';
 $DATE_PROGRESS_PLUGIN_INFORMATION_URL = 'https://cdn.valo.media/date-progress/current/plugin-information.json';
 $DATE_PROGRESS_PLUGIN_INFORMATION_TRANSIENT = 'date-progress-plugin-information';
+$DATE_PROGRESS_PLUGIN_LICENSE_URL = 'https://api.gumroad.com/v2/licenses/verify';
+$DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT = 'date-progress-license';
 
 /*
  * Imports
