@@ -345,7 +345,7 @@ function date_progress_update_plugins($transient) {
 			'plugin' => plugin_basename($PLUGIN_FILE),
 			'new_version' => $plugin_information->version,
 			'tested' => $plugin_information->tested,
-			'package' => $plugin_information->trunk
+			'package' => $plugin_information->download_link
 		);
 	}
 	return $transient;
