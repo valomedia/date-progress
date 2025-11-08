@@ -114,14 +114,15 @@ function date_progress_shortcode($atts)
 	$right_text = $percentage < 50 ? $text : '';
 
 	$progress_bar = "
-		<div class=\"progress position-relative\">
+		<div 
+				class=\"progress position-relative d-block\" 
+				role=\"progressbar\"
+				aria-valuenow=\"{$percentage}\" 
+				aria-valuemin=\"0\"
+				aria-valuemax=\"100\">
 			<div 
 					class=\"{$class}\"
-					role=\"progressbar\" 
-					style=\"{$style}\"
-					aria-valuenow=\"{$percentage}\" 
-					aria-valuemin=\"0\"
-					aria-valuemax=\"100\">
+					style=\"{$style}\">
 				{$left_text}
 			</div>
 			<small class=\"text-right w-100 px-1\">{$right_text}</small>
