@@ -29,41 +29,32 @@ This file contains all functions used in multiple other files.
 /*
  * Get the license.
  *
- * This will query Gumroad for the license. The return value is an object decoded from the JSON-response
- *
- * FIXME: This should be cached.
+ * This will query Gumroad for the license. The return value is an object decoded from the JSON-response of the
+ * Gumroad api.
  */
-function date_progress_license()
+function date_progress_license_info()
 {
 	global $DATE_PROGRESS_PRODUCT_ID;
 	global $DATE_PROGRESS_PLUGIN_LICENSE_URL;
-	global $DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT;
 
-	$transient = get_transient($DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT);
+	$license_key = get_option('date_progress_license');
+	if (!$license_key) { return false; }
 
-	if ($transient) {
-		$result = json_decode($transient);
-	} else {
-		$license_key = get_option('date_progress_license');
-		if (!$license_key) { return false; }
-
-		$remote = wp_remote_post(
-			$DATE_PROGRESS_PLUGIN_LICENSE_URL,
-			array(
-				'body' => array(
-					'product_id' => $DATE_PROGRESS_PRODUCT_ID,
-					'license_key' => $license_key,
-					'increment_uses_count' => false
-				)
+	$remote = wp_remote_post(
+		$DATE_PROGRESS_PLUGIN_LICENSE_URL,
+		array(
+			'body' => array(
+				'product_id' => $DATE_PROGRESS_PRODUCT_ID,
+				'license_key' => $license_key,
+				'increment_uses_count' => false
 			)
-		);
-		if (is_wp_error($remote) || wp_remote_retrieve_response_code($remote) !== 200) { return false; }
-		$body = wp_remote_retrieve_body($remote);
-		if (empty($body)) { return false; }
-		set_transient($DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT, $body, DAY_IN_SECONDS);
-		$result = json_decode($body);
-	}
-	return $result;
+		)
+	);
+	if (is_wp_error($remote) || wp_remote_retrieve_response_code($remote) !== 200) { return false; }
+	$body = wp_remote_retrieve_body($remote);
+	if (empty($body)) { return false; }
+
+	return json_decode($body);
 }
 
 /*
@@ -71,11 +62,23 @@ function date_progress_license()
  *
  * This will check whether the user has a valid license.
  */
-function date_progress_check_license() {
-	$license = date_progress_license();
-	return $license
-	       && $license->success
-	       && $license->purchase
-	       && !$license->purchase->refunded
-	       && !$license->purchase->chargebacked;
+function date_progress_check_license(): bool
+{
+	global $DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT;
+
+	$transient = get_transient($DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT);
+	if ($transient) { return true; }
+
+	$license_info = date_progress_license_info();
+	if (
+		$license_info
+		&& $license_info->success
+		&& $license_info->purchase
+		&& !$license_info->purchase->refunded
+		&& !$license_info->purchase->chargebacked
+	) {
+		set_transient($DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT, true, DAY_IN_SECONDS);
+		return true;
+	}
+	return false;
 }
