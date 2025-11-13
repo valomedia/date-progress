@@ -63,7 +63,7 @@ the available options though, you can read on to the next section, which explain
 
 The `date_progress` shortcode has various parameters, that allow you to customize your shortcode to your heart's 
 content. The reference section explains each option in detail. Don't worry, if there is an option you don't 
-understand, however. The only options you need to have are `start`, and either `end` or `duration`. All other 
+understand, however. The only options you need to have, are `start`, and either `end` or `duration`. All other 
 options will default to sensible values, if you do not provide anything.
 
 ### Start
@@ -130,10 +130,10 @@ respectively. If you want these placeholders to show something other than the nu
 The format to use when expanding the placeholders in the `label`. This attribute is optional and will default to 
 `%a` (the total number of days).
 
-Setting this attribute may look a bit daunting at first, but it is actually really simple. Everything you put in 
+Setting this attribute may look a bit daunting at first, but it is actually really simple. Everything you put in
+by a letter, which will be replaced by a number. For example `%a days` will output something like “32 days”. Whereas
 here will be output as is, as part of the replacement in the `label`, except for a percent-sign immediately followed 
-by a letter, which will be replaced by a number. For example `%a days` will output something like “32 days“. Whereas 
-like `%m month, %d days` might format the same as something like “1 month, 2 days“, or “1 month, 4 days“, depending 
+like `%m month, %d days` might format the same as something like “1 month, 2 days”, or “1 month, 4 days”, depending 
 on the length of the month. Please refer to the following table for the format characters you can use.
 
 | Format Character | Description                   |
