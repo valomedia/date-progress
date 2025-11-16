@@ -16,6 +16,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+//
+//  admin.php
+//  date-progress
+//
+//  Created by:
+//      * Jean-Pierre Höhmann
+//
+
 /*
 
 Backoffice functionality for date-progress.

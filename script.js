@@ -14,6 +14,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+//
+//  script.js
+//  date-progress
+//
+//  Created by:
+//      * Jean-Pierre Höhmann
+//
+
 /*
 
 Shortcode Generator

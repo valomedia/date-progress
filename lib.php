@@ -16,6 +16,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+//
+//  lib.php
+//  date-progress
+//
+//  Created by:
+//      * Jean-Pierre Höhmann
+//
+
 /*
 
 Library for date-progress.

@@ -16,6 +16,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+//
+//  date-progress.php
+//  date-progress
+//
+//  Created by:
+//      * Jean-Pierre Höhmann
+//
+
 /*
 
 Plugin Name:    DateProgress

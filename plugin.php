@@ -16,6 +16,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+//
+//  plugin.php
+//  date-progress
+//
+//  Created by:
+//      * Jean-Pierre Höhmann
+//
+
 /*
 
 Core implementation for date-progress.

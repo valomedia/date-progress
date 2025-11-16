@@ -1,3 +1,11 @@
+##
+## 	makefile
+##	date-progress
+##
+##	Created by:
+##		* Jean-Pierre Höhmann
+##
+
 #
 # Build instructions for date-progress.
 #
