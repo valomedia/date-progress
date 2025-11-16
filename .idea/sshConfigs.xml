@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SshConfigs">
-    <configs>
-      <sshConfig authType="PASSWORD" host="www485.your-server.de" id="29469799-1c03-449b-a6e1-cf5e36f3e11f" port="22" nameFormat="DESCRIPTIVE" username="vaload" useOpenSSHConfig="true" />
-    </configs>
-  </component>
-</project>

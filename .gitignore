@@ -12,5 +12,16 @@
 # <https://www.gnu.org/licenses/>.
 #
 
+#
+# Build artefacts.
+#
+
 bootstrap.min.css
 date-progress.zip
+
+#
+# Editors
+#
+
+.idea
+*.iml
