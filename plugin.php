@@ -44,7 +44,7 @@ This file contains most of the actual functionality.
  */
 function date_progress_shortcode($atts)
 {
-	global $DATE_PROGRESS_WATERMARK;
+	global $DATE_PROGRESS_ATTRIBUTION;
 
 	$a = shortcode_atts(
 		array(
@@ -56,6 +56,7 @@ function date_progress_shortcode($atts)
 			'repeating' => 'false',
 			'striped' => 'false',
 			'animated' => 'false',
+			'attribution' => 'false',
 			'color' => '#007bff',
 		),
 		$atts
@@ -68,6 +69,7 @@ function date_progress_shortcode($atts)
 	$repeating = filter_var($a['repeating'], FILTER_VALIDATE_BOOL);
 	$striped = filter_var($a['striped'], FILTER_VALIDATE_BOOL);
 	$animated = filter_var($a['animated'], FILTER_VALIDATE_BOOL);
+	$show_attribution = filter_var($a['attribution'], FILTER_VALIDATE_BOOL);
 	$color = $a['color'];
 
 	if (!$start) {
@@ -137,10 +139,10 @@ function date_progress_shortcode($atts)
 			</div>
 			<small class=\"text-right w-100 px-1\">{$right_text}</small>
 		</div>";
-	$watermark = date_progress_check_license() ? '' : "<div>{$DATE_PROGRESS_WATERMARK}</div>";
+	$attribution = $show_attribution ? "<div>{$DATE_PROGRESS_ATTRIBUTION}</div>" : '';
 
 	wp_enqueue_style('date_progress_bootstrap', plugins_url('bootstrap.min.css', __FILE__));
-	return $progress_bar . $watermark;
+	return $progress_bar . $attribution;
 }
 
 add_shortcode('date_progress', 'date_progress_shortcode' );

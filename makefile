@@ -15,11 +15,11 @@
 # script.
 #
 
-date-progress.zip :	admin.php bootstrap.min.css date-progress.php lib.php plugin.php script.js style.css
+date-progress.zip :	admin.php bootstrap.min.css date-progress.php plugin.php script.js style.css
 	cd .. \
 		&& zip \
 				date-progress/date-progress \
-				date-progress/{admin.php,bootstrap.min.css,date-progress.php,lib.php,plugin.php,script.js,style.css}
+				date-progress/{admin.php,bootstrap.min.css,date-progress.php,plugin.php,script.js,style.css}
 
 bootstrap.min.css :
 	wget https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css

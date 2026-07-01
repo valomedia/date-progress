@@ -33,72 +33,8 @@ This file implements all the functionality available in the admin panel.
 */
 
 /*
- * Settings
+ * Shortcode Generator
  */
-
-/*
- * Configure the settings for the plugin.
- *
- * This will add all settings for date-progress, along with registering the necessary callbacks.  Currently, there is
- * only one setting, which is the license key.
- */
-function date_progress_settings_init()
-{
-	register_setting('date_progress', 'date_progress_license');
-	add_settings_section(
-		'date_progress_settings_section',
-		'DateProgress Settings',
-		'date_progress_settings_section_callback',
-		'date_progress'
-	);
-	add_settings_field(
-		'date_progress_license_field',
-		'DateProgress License',
-		'date_progress_license_field_callback',
-		'date_progress',
-		'date_progress_settings_section'
-	);
-}
-
-/*
- * Callback for generating the settings section.
- *
- * This will output the markup for the additional content (other than the heading and the actual settings) of the
- * settings section for date progress.  Currently, this is either a link to our shop, if the user hasn't yet entered
- * a license key, or information about whether the license key is valid otherwise.
- */
-function date_progress_settings_section_callback()
-{
-	if (get_option( 'date_progress_license' )) {
-		echo date_progress_check_license()
-			? '<p>Your license key is valid! You are good to go :-)</p>'
-			: '
-				<p>
-					Your license key seems to be invalid :-(
-				</p>
-				<p>
-					Please <a href="https://valo.media/en-us/contact">contact us</a>, if you believe this is a mistake.
-				</p>';
-	} else {
-		echo '
-			<p>
-				DateProgress is a paid plugin. You can buy a license 
-				<a href="https://shop.valo.media/l/dateprogress">here</a>.
-			</p>';
-	}
-}
-
-/*
- * Callback for generating the license field.
- *
- * This will output the markup for the input field for the license key.
- */
-function date_progress_license_field_callback()
-{
-	$setting = get_option('date_progress_license');
-	$value = $setting ? esc_attr($setting) : '';
-	echo "<input type=\"text\" name=\"date_progress_license\" value=\"{$value}\">";
-}
 
 /*
  * Callback for generating the shortcode generator.
@@ -149,6 +85,10 @@ function date_progress_shortcode_generator_callback()
 						<td>
 							<input type="checkbox" name="date_progress_animated" id="date_progress_animated">
 							<label for="date_progress_animated">Animated</label>
+						</td>
+						<td>
+							<input type="checkbox" name="date_progress_attribution" id="date_progress_attribution">
+							<label for="date_progress_attribution">Attribution</label>
 						</td>
 					</tr>
 					<tr>
@@ -219,25 +159,10 @@ function date_progress_shortcode_generator_callback()
  */
 function date_progress_options_page_html()
 {
-	global $DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT;
-
 	wp_enqueue_style('date_progress_admin_style', plugins_url('style.css', __FILE__));
 	wp_enqueue_script('date_progress_admin_script', plugins_url('script.js', __FILE__));
-	if (isset($_POST['date_progress_license'])) {
-		add_option('date_progress_license', $_POST['date_progress_license'])
-				|| update_option('date_progress_license', $_POST['date_progress_license']);
-		delete_transient($DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT);
-	}
 	echo '<div class="wrap">';
 	echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
-	if (current_user_can('manage_options')) {
-		/** @noinspection HtmlUnknownTarget */
-		echo '<form action="tools.php?page=date_progress" method="post">';
-		do_settings_sections( 'date_progress' );
-		submit_button( 'Save Settings' );
-		echo '</form>';
-	}
-	echo '<h2>Shortcode Generator</h2>';
 	date_progress_shortcode_generator_callback();
 	echo '</div>';
 }
@@ -251,7 +176,7 @@ function date_progress_options_page()
 {
 	add_submenu_page(
 		'tools.php',
-		'DateProgress Options',
+		'DateProgress',
 		'DateProgress',
 		'manage_options',
 		'date_progress',
@@ -259,7 +184,6 @@ function date_progress_options_page()
 	);
 }
 
-add_action('admin_init', 'date_progress_settings_init');
 add_action('admin_menu', 'date_progress_options_page');
 
 /*
