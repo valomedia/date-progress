@@ -36,13 +36,14 @@ duplicating the logic for most of the plugin in JS, or changing the shortcode ge
 
 document.getElementById('date_progress_shortcode_generator').addEventListener('submit', (event) => {
     event.preventDefault();
-    let radio = document.querySelector('input[name="date_progress_radio"]:checked').value
-    let attributes = [
+    const radio = document.querySelector('input[name="date_progress_radio"]:checked').value
+    const attributes = [
         ['label', document.getElementById('date_progress_label').value],
         ['format', document.getElementById('date_progress_format').value],
         ['color', document.getElementById('date_progress_color').value],
         ['striped', document.getElementById('date_progress_striped').checked],
         ['animated', document.getElementById('date_progress_animated').checked],
+        ['attribution', document.getElementById('date_progress_attribution').checked],
         ['start', document.getElementById('date_progress_start').value],
         [radio, document.getElementById('date_progress_' + radio).value],
         ['repeating', document.getElementById('date_progress_repeating').checked && radio === 'duration']

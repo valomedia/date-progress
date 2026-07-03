@@ -18,6 +18,7 @@ information, which makes it both easier to take in at a glance, and more intuiti
 * Custom colors
 * Striped progress bars
 * Progress bars with animated stripes
+* Optional DateProgress attribution
 * Schedule a progress bar to appear in the future
 * Progress bars automatically disappear after running out
 * Repeating intervals can be specified
@@ -169,6 +170,11 @@ Whether to stripe the progress bar. Defaults to `no`. If this is set to `yes`, a
 
 Whether to animate the stripes on the progress bar. Defaults to `no`. If this is set to `yes`, the stripes on the 
 progress bar will be animated. This does nothing unless `striped` is also set to `yes`.
+
+### Attribution
+
+Whether to show a small DateProgress attribution below the progress bar. Defaults to `no`. If this is set to `yes`,
+the shortcode will add a “Made using DateProgress by valo.media” link below the progress bar.
 
 ## Reporting Bugs
 

@@ -42,21 +42,17 @@ License URI:    https://www.gnu.org/licenses/gpl-3.0.html
  */
 
 $PLUGIN_FILE = __FILE__;
-$DATE_PROGRESS_PRODUCT_ID = 'eQWGX2AwQtdGU_fQIEGsgA==';
-$DATE_PROGRESS_WATERMARK = '
+$DATE_PROGRESS_ATTRIBUTION = '
 	<p>
 		Made using <a href="https://valo.media/en-us/dateprogress">DateProgress by valo.media</a>.
 	</p>';
 $DATE_PROGRESS_PLUGIN_INFORMATION_URL = 'https://cdn.valo.media/date-progress/current/plugin-information.json';
 $DATE_PROGRESS_PLUGIN_INFORMATION_TRANSIENT = 'date-progress-plugin-information';
-$DATE_PROGRESS_PLUGIN_LICENSE_URL = 'https://api.gumroad.com/v2/licenses/verify';
-$DATE_PROGRESS_PLUGIN_LICENSE_TRANSIENT = 'date-progress-license';
 
 /*
  * Imports
  */
 
-require_once(plugin_dir_path(__FILE__) . 'lib.php');
 require_once(plugin_dir_path(__FILE__) . 'plugin.php');
 
 if (is_admin()) {
