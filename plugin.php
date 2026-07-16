@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (c) 2025.
+ * Copyright (c) 2025-2026.
  * valo.media GmbH
  * All rights reserved.
  *
@@ -15,14 +15,6 @@
  * You should have received a copy of the GNU General Public License along with DateProgress. If not, see
  * <https://www.gnu.org/licenses/>.
  */
-
-//
-//  plugin.php
-//  date-progress
-//
-//  Created by:
-//      * Jean-Pierre Höhmann
-//
 
 /*
 
