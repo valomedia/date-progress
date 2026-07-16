@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025-2026.
+ * Copyright (c) 2025.
  * valo.media GmbH
  * All rights reserved.
  *
@@ -13,6 +13,11 @@
  * You should have received a copy of the GNU General Public License along with DateProgress. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+//
+//  script.js
+//  date-progress
+//
 
 /*
 

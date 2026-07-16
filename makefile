@@ -1,3 +1,8 @@
+##
+## 	makefile
+##	date-progress
+##
+
 #
 # Build instructions for date-progress.
 #
