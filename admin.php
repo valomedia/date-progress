@@ -20,9 +20,6 @@
 //  admin.php
 //  date-progress
 //
-//  Created by:
-//      * Jean-Pierre Höhmann
-//
 
 /*
 

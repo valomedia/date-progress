@@ -18,9 +18,6 @@
 //  script.js
 //  date-progress
 //
-//  Created by:
-//      * Jean-Pierre Höhmann
-//
 
 /*
 
